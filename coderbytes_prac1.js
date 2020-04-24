@@ -2,85 +2,86 @@ function CommandLine(str) {
 
     // code goes here
     var output = [];
-    var parts = [];
+    var parts = str.split("=");
     var subparts = [];
     var keys = [];
-    var keys2 = [];
-    var keys3 = [];
     var vals = [];
-    var vals2 = [];
     var i, j = 0;
-    var re = [];
-    var re2 = [];
-    key_len = 0
-    val_len = 0
   
-    parts = str.split(/(?<=\=)/);
-    
-    function my_len(str){
-      return (str == null ? 0 : str.length)
+    for(i = 0; i < parts.length; i++) {
+      subparts[i] = parts[i].split(" ")
+      for (j = 0; j < subparts[i].length; j++) {
+        //console.log(subparts[i][j])
+        //console.log("")       
+      }
     }
   
-    for (i = 0; i < parts.length; i++) {
-      //console.log(parts[i])
-      for (j = 0; j < parts[i].length; j++) {
-        if (parts[i][j] == "=") {
-          //console.log(parts[i][j-1])
-          subparts = parts[i].split(' ')
-          keys[i] = " " + subparts[subparts.length - 1] // keys with prior space included        
-          keys2[i] = keys[i].substring(1, keys[i].length) // keys without prior space with delim included
-          keys3[i] = keys[i].substring(1, keys[i].length - 1) // keys without prior space or delim 
-          //console.log(subparts.length)
-          /*
-          if (subparts.length > 1) {
-            parts[i].pop()
-          }
-          */
-          //console.log(keys[i], keys[i].length)
-          //console.log(keys2[i], keys2[i].length)
-        }
-      }    
+    for(i = 0; i < parts.length - 1; i++) {
+      keys[i] = subparts[i][subparts[i].length - 1]
+      //console.log(keys[i])
+      //console.log("")
     }
+    console.log("")
   
-    //console.log("")
-  
-    for (i = 0; i < keys.length; i++) {
-      re[i] = new RegExp(keys[i], "g") // create REs with keys (including surrounding space)
-      re2[i] = new RegExp(keys2[i], "g") // create REs with keys (not including surrounding space)
-    }
-  
-    for (i = 0; i < parts.length; i++) {
-      if (i == 0) {
-        vals[i] = parts[i].replace(re2[i], " ")
-      } 
+    for(i = 0; i < parts.length; i++) {
+      if (parts[i + 1] != null){
+        vals[i] = parts[i + 1].substring(0, parts[i].length - keys[i].length - 1)
+      //console.log(vals[i])
+      }
       else {
-        vals[i] = parts[i].replace(re[i], "")
-      }
-      //console.log(vals[i], my_len(vals[i]))
+        vals[i] = parts[i]
+      } 
     }
-  
-    
-    for (i = 0; i < vals.length + 1; i++) {
-      if (vals[i] == null) {
-        vals2[i] = null
-      } else {
-        vals2[i] = vals[i + 1]
+    /*
+    for(i = 0; i < parts.length - 1; i++) {
+      if(subparts[i+1] != null) {
+        if(subparts[i+2]!= null) {
+          subparts[i+1].pop()
+        }
+        
+        vals[i] = subparts[i+1].join() //substring(0, subparts[i+1].length - keys[i+1].length)
+        console.log(vals[i])
       }
     }
+    */
+      
   
-    output = keys3.map(function(i, j) {
-      return (my_len(i) + " = " + my_len(vals2[j]));
+    /*
+    output = keys.map(function(i, j) {
+      return [i, vals[j]];
     });
   
-    output2 = output.toString().replace(" [ ", "")
-    output3 = output2.replace(/ ] /g, "")
-    output4 = output3.replace(/ ' /g, "")
-    output5 = output4.replace(/ /g, "")
-    output6 = output5.replace(/,/g, " ")
+  
+  
+    subparts[i].substring(parts[i].length - , parts[i].length)
+  
+    parts.forEach(item => {
+      //console.log(item)
+      subpart = item.split(" ")    
+      //console.log(subpart[subpart.length - 1])
+      
+      keys[i] = subpart[subpart.length - 1]
+      //vals[i] = item.substring(0, (item.length - keys[i].length) - 1)
+      i++
+    });
+  
+    parts.forEach(item => {   
+      vals[j] = item.substring(0, (item.length - keys[j].length) - 1)
+      j++
+    });
+    */
     
-    return output6
-    
+    for(i = 0; i < keys.length; i++) {
+      console.log(keys[i])
+      console.log(vals[i])
+      console.log(keys[i].length)
+      console.log(vals[i].length) 
+      console.log("")
+    }
+  
     //return str; 
+    return output
+  
   }
      
   // keep this function call here 
